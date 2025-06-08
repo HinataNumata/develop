@@ -5,10 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HelloController {
+public class IndexController {
 
     @GetMapping("/")
-    public String hello(Model model) {
-        return "hello"; // → templates/hello.html を表示
+    public String index(Model model) {
+        return "index"; // → templates/index.html を表示
     }
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>加算フォーム</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+        label {
+            display: block;
+            margin-top: 1rem;
+        }
+        input {
+            padding: 0.5rem;
+            margin-top: 0.25rem;
+        }
+        button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+        }
+        .result {
+            margin-top: 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>加算フォーム</h1>
+
+<form id="calc-form">
+    <label>
+        数値1:
+        <input type="number" id="value1" required>
+    </label>
+    <label>
+        数値2:
+        <input type="number" id="value2" required>
+    </label>
+    <button type="submit">計算</button>
+</form>
+
+<div class="result" id="result"></div>
+
+<script>
+    document.getElementById('calc-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const value1 = document.getElementById('value1').value;
+        const value2 = document.getElementById('value2').value;
+
+        fetch('/api/calculation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ value1, value2 })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('result').textContent = '結果: ' + data.result;
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('result').textContent = 'エラーが発生しました';
+        });
+    });
+</script>
+
+</body>
+</html>
